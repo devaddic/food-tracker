@@ -1,0 +1,169 @@
+body {
+    background-image: url('../pictures/background.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.container {
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    left: 485px;
+    top: 585px;
+}
+
+.icon {
+    width: 75px;
+    height: auto;
+    position: absolute;
+    z-index: 3;
+    cursor: grab;
+}
+
+#iconContainer {
+    position: absolute;
+    width: 100px;
+    height: 50px;
+    top: 200px;
+    
+}
+
+.fridge2-container {
+    position: absolute;
+    top: 115px;
+    right: 200px;
+    width: 290px;
+    height: 268px;
+    
+}
+
+#fridge2 {
+    position: absolute;
+    width: 290px;
+    height: 268px;
+    transform: rotateY(0deg);
+    transform-origin: left center;
+    transition: transform 1s ease-in-out;
+    z-index: 2;
+}
+
+.fridge3-container {
+    position: absolute;
+    bottom: 7px;
+    right: 200px;
+    width: 290px;
+    height: 444px;
+
+}
+
+#fridge3 {
+    position: absolute;
+    z-index: 3;
+    width: 290px;
+    height: 444px;
+    transform: rotateY(0deg);
+    transform-origin: left center;
+    transition: transform 1s ease-in-out;
+    z-index: 2;
+}
+
+.pisto-container {
+    position: absolute;
+    bottom: 222px;
+    left: 475px;
+    width: 186px;
+    height: 225px;
+
+}
+
+.cabinet-container {
+    position: absolute;
+    bottom: 0px;
+    left: 250px;
+    width: 600px;
+    height: 222px;
+
+}
+
+.fridge-container {
+    position: absolute;
+    bottom: 0px;
+    right: 200px;
+    width: 290px;
+    height: 721px;
+
+}
+
+#button, #piston, #pisto, #cabinet, #fridge1, #fridge6, #fridge7 {
+    position: absolute;
+}
+
+#fridge6, #fridge7 {
+    width: 92px;
+    height: 45px;
+    left: 35%;
+}
+
+#button {
+    width: 32px;
+    height: 32px;
+    top: 14px;
+    left: 130px;
+}
+
+#piston {
+    width: 96px;
+    height: 98px;
+    left: 24.5%;
+    top: 26.8%;
+}
+
+#pisto {
+    width: 186px;
+    height: 227px;
+}
+
+#cabinet {
+    width: 600px;
+    height: 222px;
+}
+
+#fridge1 {
+    width: 290px;
+    height: 721px;
+}
+
+#fridge6 {
+    top: 3%;
+}
+
+#fridge7 {
+    top: 40%;
+}
+
+.shape {
+    width: 75px;
+    height: auto;
+    position: absolute;
+    z-index: 1;
+    cursor: grab;
+}
+
+table {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
