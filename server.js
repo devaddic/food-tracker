@@ -48,7 +48,7 @@ app2.get('/search', async (req, res) => {
   }
 });
 
-const port2 = process.env.PORT || 5000;
+const port2 = 5000;
 app2.listen(port2, () => {
   console.log(`Proxy server running on port ${port2}`);
 });
