@@ -9,7 +9,7 @@ async function fetchEndLife(foodItem, storageType, startLife) {
     const apiUrl = `https://your-ai-model-api.com/predict?shelf_life=${foodItem}&storage_type=${storageType}&start_life=${startLife}`;
 
     const headers = {
-        'Authorization': `Bearer ${EDEN_AI_AUTHORIZATION_KEY}`,
+        'Authorization': `Bearer ${process.env.EDEN_AI_AUTHORIZATION_KEY}`,
         'Content-Type': 'application/json'
     };
     const url = 'https://api.edenai.run/v2/workflow/1b63438f-dfc7-4187-9473-d12de23ba7b4/execution/';
