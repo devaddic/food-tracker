@@ -14,7 +14,7 @@
         <img id="button" src="pictures/button.png" alt="button" onclick="fetchIcon()">
     </div>
     <div class="container">
-        <input type="text" id="searchInput" placeholder="Enter food item">
+        <input type="text" id="searchInput" placeholder="Enter food item" onkeydown="inputEntered(event)">
         <div id="iconContainer"></div>
     </div>
     <div class="fridge2-container">
@@ -41,6 +41,5 @@
         </tbody>
     </table>
     <script src="scripts/interact.js"></script>
-    <script src="scripts/test.js"></script>
 </body>
 </html>
