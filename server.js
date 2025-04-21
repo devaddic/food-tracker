@@ -13,7 +13,7 @@ app.post('/fetchEndLife', async (req, res) => {
   // Eden AI setup
   const edenUrl = 'https://api.edenai.run/v2/workflow/1b63438f-dfc7-4187-9473-d12de23ba7b4/execution/';
   const headers = {
-    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiNjE1ZDRmYTYtZjVmZS00Y2JhLTg5NzMtMzc5ZWI0MmUyMmFhIiwidHlwZSI6ImFwaV90b2tlbiJ9.UcaZkO27JldKjt82wzx88bCfof5w76tpFps-t2ZNf2w',
+    'Authorization': `Bearer ${procces.env.EDEN_AI_AUTHORIZATION_KEY}`,
     'Content-Type': 'application/json'
   };
 
