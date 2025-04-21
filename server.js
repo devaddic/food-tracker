@@ -7,6 +7,11 @@ app.get('/', (req, res) => {
   //res.send()
 });
 
+app.get('/getText', async (req, res) => {
+
+  res.json({ text : 'sfs' });
+});
+
 const port = process.env.PORT || 4000;
 
 app.listen(port, () => {
