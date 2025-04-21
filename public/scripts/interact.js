@@ -161,6 +161,12 @@ async function fetchIcon() {
     }
 }
 
+async function inputEntered(event) {
+    if (event.key === 'Enter') {
+        await fetchIcon();
+    }
+}
+
 function makeDraggable(shape) {
 let isDragging = false;
 let initialX, initialY, offsetX, offsetY;
@@ -179,14 +185,6 @@ piston.style.transform = 'rotateX(0deg)';
 
 }
 });
-
-async function inputEntered (event) {
-    if (event.key === 'Enter') {
-        const value = event.target.value;
-        console.log('User pressed Enter with:', value);
-        await fetchIcon(value);
-    }
-  }
 
 shape.addEventListener('mousedown', function(event) {
 isDragging = true;
