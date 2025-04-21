@@ -7,13 +7,15 @@ const app = express()
 app.use(express.static('public'));
 app.use(express.json());
 
+const A_KEY = 
+
 app.post('/fetchEndLife', async (req, res) => {
   const { foodItem, storageType, startLife } = req.body;
 
   // Eden AI setup
   const edenUrl = 'https://api.edenai.run/v2/workflow/1b63438f-dfc7-4187-9473-d12de23ba7b4/execution/';
   const headers = {
-    'Authorization': `Bearer ${procces.env.EDEN_AI_AUTHORIZATION_KEY}`,
+    'Authorization': `Bearer ${process.env.EDEN_AI_AUTHORIZATION_KEY}`,
     'Content-Type': 'application/json'
   };
 
