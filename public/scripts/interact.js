@@ -162,8 +162,8 @@ async function fetchIcon() {
             iconElement.dataset.foodItem = query; // Save food item to dataset attribute
             
             // Define the spawn point coordinates
-            const spawnLeft = 100 + iconCount * 10; // Example: Change 100 and 10 to your desired values
-            const spawnTop = 200 + iconCount * 10;  // Example: Change 200 and 10 to your desired values
+            const spawnLeft = 100 + iconCount * 10; 
+            const spawnTop = 200 + iconCount * 10;  
             
 
 
