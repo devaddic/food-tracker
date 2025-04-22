@@ -94,10 +94,16 @@ function displayDataset() {
 
         Object.values(entry).forEach(cellValue => {
             const cell = document.createElement("td");
-            cell.textContent = cellValue;
+             
+            if(cellValue == entry.start_life) {
+                cell.textContent = new Date(entry.start_life * 1000).toString().substring(4,21);
+            }
+            else {
+                cell.textContent = cellValue;
+            }
             row.appendChild(cell);
         });
-
+        
         tableBody.appendChild(row);
     });
 }
