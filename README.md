@@ -5,4 +5,4 @@ predict the expiration of common food items. Although the project is in its earl
 development stage, a functional version is can be accessed [here](https://food-tracker-0bd8.onrender.com).
 
 
-Click on the image to watch a demo. [![here](demo/preview.png)|400](https://vimeo.com/1077509882/0f3759f821?share=copy)
+Click on the image to watch a demo. [![here](demo/preview.png)](https://vimeo.com/1077509882/0f3759f821?share=copy)
