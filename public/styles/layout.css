@@ -1,7 +1,24 @@
+* {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    position: relative;
+  }
+
 body {
     background-image: url('../pictures/background.png');
     background-size: cover;
     background-repeat: no-repeat;
+    overflow: hidden;
+}
+
+.kitchenContainer {
+    position: relative;
+    min-height: 100vh;   
 }
 
 .container {
@@ -11,13 +28,13 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    left: 485px;
-    top: 585px;
+    bottom: calc((222/834) * 100%);
+    left: calc((475/1528) * 100%);
+    width: calc((186/1528) * 100%);
+    height: calc((225/834) * 100%);
 }
 
 .icon {
-    width: 75px;
-    height: auto;
     position: absolute;
     z-index: 3;
     cursor: grab;
@@ -25,25 +42,32 @@ body {
 
 #iconContainer {
     position: absolute;
-    width: 100px;
-    height: 50px;
-    top: 200px;
+    bottom: 30%;
+    width: 40%;
+    height: auto;
     
+}
+
+#searchInput {
+    position: absolute;
+    width: 90%;
+    height: 10%;
+    bottom: 3%;
 }
 
 .fridge2-container {
     position: absolute;
-    top: 115px;
-    right: 200px;
-    width: 290px;
-    height: 268px;
+    top: calc((115/834) * 100%);
+    right: calc((200/1528) * 100%);
+    width: calc((290/1528) * 100%);
+    height: calc((268/834) * 100%);
     
 }
 
 #fridge2 {
     position: absolute;
-    width: 290px;
-    height: 268px;
+    width: 100%;
+    height: 100%;
     transform: rotateY(0deg);
     transform-origin: left center;
     transition: transform 1s ease-in-out;
@@ -52,18 +76,18 @@ body {
 
 .fridge3-container {
     position: absolute;
-    bottom: 7px;
-    right: 200px;
-    width: 290px;
-    height: 444px;
+    bottom: calc((7/834) * 100%);
+    right: calc((200/1528) * 100%);
+    width: calc((290/1528) * 100%);
+    height: calc((444/834) * 100%);
 
 }
 
 #fridge3 {
     position: absolute;
     z-index: 3;
-    width: 290px;
-    height: 444px;
+    width: 100%;
+    height: 100%;
     transform: rotateY(0deg);
     transform-origin: left center;
     transition: transform 1s ease-in-out;
@@ -72,28 +96,28 @@ body {
 
 .pisto-container {
     position: absolute;
-    bottom: 222px;
-    left: 475px;
-    width: 186px;
-    height: 225px;
+    bottom: calc((222/834) * 100%);
+    left: calc((475/1528) * 100%);
+    width: calc((186/1528) * 100%);
+    height: calc((225/834) * 100%);
 
 }
 
 .cabinet-container {
     position: absolute;
-    bottom: 0px;
-    left: 250px;
-    width: 600px;
-    height: 222px;
+    bottom: 0;
+    left: calc((250/1528) * 100%);
+    width: calc((600/1528) * 100%);
+    height: calc((222/834) * 100%);
 
 }
 
 .fridge-container {
     position: absolute;
     bottom: 0px;
-    right: 200px;
-    width: 290px;
-    height: 721px;
+    right: calc((200/1528) * 100%);
+    width: calc((290/1528) * 100%);
+    height: calc((721/834) * 100%);
 
 }
 
@@ -102,38 +126,38 @@ body {
 }
 
 #fridge6, #fridge7 {
-    width: 92px;
-    height: 45px;
+    width: calc((92/290) * 100%);
+    height: calc((45/721) * 100%);
     left: 35%;
 }
 
 #button {
-    width: 32px;
-    height: 32px;
-    top: 14px;
-    left: 130px;
+    width: calc((32/186) * 100%);
+    height: calc((32/225) * 100%);
+    top: calc((14/225) * 100%);;
+    left: calc((130/186) * 100%);
 }
 
 #piston {
-    width: 96px;
-    height: 98px;
+    width: calc((96/186) * 100%);
+    height: calc((98/225) * 100%);
     left: 24.5%;
     top: 26.8%;
 }
 
 #pisto {
-    width: 186px;
-    height: 227px;
+    width: 100%;
+    height: 100%;
 }
 
 #cabinet {
-    width: 600px;
-    height: 222px;
+    width: 100%;
+    height: 100%;
 }
 
 #fridge1 {
-    width: 290px;
-    height: 721px;
+    width: 100%;
+    height: 100%;
 }
 
 #fridge6 {
@@ -145,7 +169,7 @@ body {
 }
 
 .shape {
-    width: 75px;
+    width: 100%;
     height: auto;
     position: absolute;
     z-index: 1;

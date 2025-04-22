@@ -7,41 +7,43 @@
     <link href="styles/layout.css" type="text/css" rel="stylesheet"/>
 </head>
 <body>
-    <div class="cabinet-container">
-        <img id="cabinet" src="pictures/cabinet.png" alt="cabinet">
-    </div>
-    <div class="pisto-container">
-        <img id="pisto" src="pictures/pisto.png" alt="pisto">
-        <img id="piston" src="pictures/piston.png" alt="piston">
-        <img id="button" src="pictures/button.png" alt="button" onclick="fetchIcon()">
-    </div>
+    <div class="kitchenContainer">
+        <div class="cabinet-container">
+            <img id="cabinet" src="pictures/cabinet.png" alt="cabinet">
+        </div>
+        <div class="pisto-container">
+            <img id="pisto" src="pictures/pisto.png" alt="pisto">
+            <img id="piston" src="pictures/piston.png" alt="piston">
+            <img id="button" src="pictures/button.png" alt="button" onclick="fetchIcon()">
+        </div>
     <div class="container">
-        <input type="text" id="searchInput" placeholder="Enter food item" onkeydown="inputEntered(event)">
-        <div id="iconContainer"></div>
+            <input type="text" id="searchInput" placeholder="Enter food item" onkeydown="inputEntered(event)">
+            <div id="iconContainer"></div>
     </div>
-    <div class="fridge2-container">
-        <img id="fridge2" src="pictures/fridge2.png" alt="Fridge 2">
+        <div class="fridge2-container">
+            <img id="fridge2" src="pictures/fridge2.png" alt="Fridge 2">
+        </div>
+        <div class="fridge3-container">
+            <img id="fridge3" src="pictures/fridge3.png" alt="Fridge 3">
+        </div>
+        <div class="fridge-container">
+            <img id="fridge1" src="pictures/fridge1.png" alt="Fridge 1">
+            <img id="fridge6" src="pictures/fridge6.png" alt="Fridge 6">
+            <img id="fridge7" src="pictures/fridge7.png" alt="Fridge 7">
+        </div>
+        <table style = "width: 50%;" id="datasetDisplay">
+            <thead>
+                <tr>
+                    <th>Food Item</th>
+                    <th>Storage Medium</th>
+                    <th>Life Start</th>
+                    <th>Life End</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
-    <div class="fridge3-container">
-        <img id="fridge3" src="pictures/fridge3.png" alt="Fridge 3">
-    </div>
-    <div class="fridge-container">
-        <img id="fridge1" src="pictures/fridge1.png" alt="Fridge 1">
-        <img id="fridge6" src="pictures/fridge6.png" alt="Fridge 6">
-        <img id="fridge7" src="pictures/fridge7.png" alt="Fridge 7">
-    </div>
-    <table style = "width: 50%;" id="datasetDisplay">
-        <thead>
-            <tr>
-                <th>Food Item</th>
-                <th>Storage Medium</th>
-                <th>Life Start</th>
-                <th>Life End</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
     <script src="scripts/interact.js"></script>
 </body>
 </html>

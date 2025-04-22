@@ -130,15 +130,9 @@ async function fetchIcon() {
             iconElement.id = query; // Use the food item as the ID
             iconElement.dataset.foodItem = query; // Save food item to dataset attribute
             
-            // Define the spawn point coordinates
-            const spawnLeft = 100 + iconCount * 10; 
-            const spawnTop = 200 + iconCount * 10;  
-            
 
-
-            // Set the position of the shape
-            iconElement.style.left = `5px`;
-            iconElement.style.bottom = `300px`;
+            iconElement.style.right = `0%`;
+            iconElement.style.bottom = `0%`;
             iconContainer.appendChild(iconElement);
 
             // Trigger piston transformation on X-axis (automatic animation)
