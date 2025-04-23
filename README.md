@@ -7,4 +7,8 @@ development stage, a functional version can be accessed [here](https://food-trac
 
 Click on the image to watch a demo. 
 <br/>
-[![here](demo/preview.png)](https://vimeo.com/1077509882/0f3759f821?share=copy)
+<a href="https://vimeo.com/1077509882/0f3759f821" target="_blank">
+  <img src="demo/preview.png" alt="Description">
+</a>
+
+
