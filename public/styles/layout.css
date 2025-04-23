@@ -176,6 +176,14 @@ body {
     cursor: grab;
 }
 
+.gitHubLogo-Container {
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    right: 1%;
+    bottom: 3%;
+}
+
 table {
     margin-top: 20px;
     width: 100%;
