@@ -115,49 +115,59 @@ async function fetchIcon() {
     }
 
     const query = document.getElementById('searchInput').value;
-    const proxyUrl = `/search?query=${query}`;
 
-    try {
-        const response = await fetch(proxyUrl);
-        const data = await response.json();
-        const iconUrl = data.icon_url;
+    const startLife = getCurrentUnixTime();
+    const storageType = 'pantry';
+    const foodItem = query;
+    
+    
 
-        if (iconUrl !== "No icon found.") {
-            const iconContainer = document.getElementById('iconContainer');
-            const iconElement = document.createElement('img');
-            iconElement.src = iconUrl;
-            iconElement.classList.add('shape');
-            iconElement.id = query; // Use the food item as the ID
-            iconElement.dataset.foodItem = query; // Save food item to dataset attribute
-            
+    // Call fetchEndLife when the shape is created
+    const endLife = await fetchEndLife(foodItem, storageType, startLife);
+    console.log('endLife: ' + endLife);
 
-            iconElement.style.right = `0%`;
-            iconElement.style.bottom = `0%`;
-            iconContainer.appendChild(iconElement);
+    if(endLife == "invalid") {
+        alert(foodItem + " is an invalid food item!");
 
-            // Trigger piston transformation on X-axis (automatic animation)
-            const piston = document.getElementById('piston');
-            piston.style.transformOrigin ='top center';
-            piston.style.transform = 'rotateX(180deg)';  // Apply X-axis scaling transformation
-            piston.style.transition = 'transform 1s ease-in-out'; // Smooth transition for animation
+    }
 
-            const startLife = getCurrentUnixTime();
-            const storageType = 'pantry';
-            const foodItem = query;
-            
-            addEntryToDataset(foodItem, storageType, startLife, 'TBD');
+    else { 
+        const proxyUrl = `/search?query=${query}`;
 
-            // Call fetchEndLife when the shape is created
-            const endLife = await fetchEndLife(foodItem, storageType, startLife);
-            updateEntryInDataset(foodItem, storageType, endLife);
+        try {
+            const response = await fetch(proxyUrl);
+            const data = await response.json();
+            const iconUrl = data.icon_url;
 
-            makeDraggable(iconElement);
-            iconCount++;
-        } else {
-            alert('No icon found.');
+            if (iconUrl !== "No icon found.") {
+                const iconContainer = document.getElementById('iconContainer');
+                const iconElement = document.createElement('img');
+                iconElement.src = iconUrl;
+                iconElement.classList.add('shape');
+                iconElement.id = query; // Use the food item as the ID
+                iconElement.dataset.foodItem = query; // Save food item to dataset attribute
+                
+
+                iconElement.style.right = `0%`;
+                iconElement.style.bottom = `0%`;
+                iconContainer.appendChild(iconElement);
+
+                addEntryToDataset(foodItem, storageType, startLife, endLife);
+
+                // Trigger piston transformation on X-axis (automatic animation)
+                const piston = document.getElementById('piston');
+                piston.style.transformOrigin ='top center';
+                piston.style.transform = 'rotateX(180deg)';  // Apply X-axis scaling transformation
+                piston.style.transition = 'transform 1s ease-in-out'; // Smooth transition for animation
+
+                makeDraggable(iconElement);
+                iconCount++;
+            } else {
+                alert('No icon found.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
         }
-    } catch (error) {
-        console.error('Error:', error);
     }
 }
 
