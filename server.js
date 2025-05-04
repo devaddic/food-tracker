@@ -20,7 +20,7 @@ app.post('/fetchEndLife', async (req, res) => {
   };
 
   const payload = {
-    prompt: `Answer by only stating a number + "days", "weeks","months", or "years". Let say I have ${foodItem} that is kept in ${storageType} and was fresh since the unix time in seconds: ${startLife}. When can I expect it to expire?`
+    prompt: `Answer by only stating a number + "days", "weeks","months", "years" or if it is not a food item state exactly the word "invalid". Let say I have ${foodItem} that is kept in ${storageType} and was fresh since the unix time in seconds: ${startLife}. When can I expect it to expire?`
   };
 
   try {
