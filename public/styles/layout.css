@@ -10,10 +10,18 @@
   }
 
 body {
+    overflow: hidden;
+}
+
+.kitchenWallpaper {
+    position: absolute;
+    width: 100%;
+    height: 85%;
+    bottom: 15%;
     background-image: url('../pictures/background.png');
     background-size: cover;
     background-repeat: no-repeat;
-    overflow: hidden;
+    
 }
 
 .kitchenContainer {
