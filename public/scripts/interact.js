@@ -126,7 +126,7 @@ async function fetchIcon() {
     const endLife = await fetchEndLife(foodItem, storageType, startLife);
     console.log('endLife: ' + endLife);
 
-    if(endLife == "invalid") {
+    if((endLife == "invalid") || (endLife == "Invalid.")) {
         alert(foodItem + " is an invalid food item!");
 
     }
