@@ -13,20 +13,17 @@ body {
     overflow: hidden;
 }
 
-.kitchenWallpaper {
+#kitchenWallpaper {
     position: absolute;
     width: 100%;
     height: 85%;
-    bottom: 15%;
-    background-image: url('../pictures/background.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    
+    top: 0%;
 }
 
 .kitchenContainer {
     position: relative;
-    min-height: 100vh;   
+    height: 95%;   
+    bottom: 5%;
 }
 
 .container {
@@ -193,8 +190,8 @@ body {
 }
 
 table {
-    margin-top: 20px;
-    width: 100%;
+    position: absolute;
+    top: 5%;
     border-collapse: collapse;
 }
 
