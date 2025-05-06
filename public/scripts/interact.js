@@ -27,9 +27,9 @@ async function fetchEndLife(foodItem, storageType, startLife) {
 
 function checkFridgeState(event) {
     const rect2 = fridge2Container.getBoundingClientRect();
-    const isCursorInside2 = event.clientX >= rect2.left && event.clientX <= rect2.right && event.clientY >= rect2.top && event.clientY <= rect2.bottom;
+    const isCursorInside2 = (event.clientX || event.touches[0].clientX) >= rect2.left && (event.clientX || event.touches[0].clientX) <= rect2.right && (event.clientY || event.touches[0].clientY) >= rect2.top && (event.clientY || event.touches[0].clientY) <= rect2.bottom;
     const rect3 = fridge3Container.getBoundingClientRect();
-    const isCursorInside3 = event.clientX >= rect3.left && event.clientX <= rect3.right && event.clientY >= rect3.top && event.clientY <= rect3.bottom;
+    const isCursorInside3 = (event.clientX || event.touches[0].clientX) >= rect3.left &&(event.clientX || event.touches[0].clientX) <= rect3.right && (event.clientY || event.touches[0].clientY) >= rect3.top && (event.clientY || event.touches[0].clientY) <= rect3.bottom;
 
     if (isCursorInside2) {
         fridge2.style.transform = 'rotateY(-120deg)';
@@ -196,42 +196,63 @@ piston.style.transform = 'rotateX(0deg)';
 }
 });
 
-shape.addEventListener('mousedown', function(event) {
-isDragging = true;
-initialX = event.clientX;
-initialY = event.clientY;
-offsetX = shape.offsetLeft;
-offsetY = shape.offsetTop;
-shape.style.zIndex = '9999'; // Bring the shape to the top while dragging
-event.preventDefault();
-});
+document.addEventListener('touchdown', function() {
 
-document.addEventListener('mousemove', function(event) {
-if (isDragging) {
-    shape.style.left = (offsetX + event.clientX - initialX) + 'px';
-    shape.style.top = (offsetY + event.clientY - initialY) + 'px';
-    checkFridgeState(event);
-}
-});
-
-document.addEventListener('mouseup', function() {
-if (isDragging) {
-    const storageType = getStorageType(shape); // Pass the shape element
-    const foodItem = shape.dataset.foodItem;
-    const startLife = getStartLife(foodItem); // Fetch the start life value
+    const rect = shape.getBoundingClientRect();
+    const containerRect = pistoContainer.getBoundingClientRect();
     
-    // Call fetchEndLife when the storage type changes
-    fetchEndLife(foodItem, storageType, startLife)
-        .then(endLife => {
-            updateEntryInDataset(foodItem, storageType, endLife);
-        });
-
+    if (rect.right < containerRect.left || rect.left > containerRect.right || rect.bottom < containerRect.top || rect.top > containerRect.bottom) {
+    // Apply transformation to piston when icon is dragged outside
+    piston.style.transition = 'transform 1s ease-in-out';
+    piston.style.transformOrigin = 'center top';
+    piston.style.transform = 'rotateX(0deg)';
     
+    
+    }
+    });
 
-    isDragging = false;
-    shape.style.zIndex = '2'; // Reset the shape's z-index after dragging
+function startDragShape(event) {
+    isDragging = true;
+    initialX = (event.clientX || event.touches[0].clientX);
+    initialY = (event.clientY || event.touches[0].clientY);
+    offsetX = shape.offsetLeft;
+    offsetY = shape.offsetTop;
+    shape.style.zIndex = '9999'; // Bring the shape to the top while dragging
+    event.preventDefault();
 }
-});
+shape.addEventListener('mousedown', startDragShape);
+shape.addEventListener('touchstart', startDragShape);
+
+function dragShape(event) {
+    if (isDragging) {
+        shape.style.left = (offsetX + (event.clientX || event.touches[0].clientX) - initialX) + 'px';
+        shape.style.top = (offsetY + (event.clientY || event.touches[0].clientY) - initialY) + 'px';
+        checkFridgeState(event);
+    }
+}
+document.addEventListener('mousemove', dragShape);
+document.addEventListener('touchmove', dragShape);
+
+function endDragShape(event) {
+    if (isDragging) {
+        const storageType = getStorageType(shape); // Pass the shape element
+        const foodItem = shape.dataset.foodItem;
+        const startLife = getStartLife(foodItem); // Fetch the start life value
+        
+        // Call fetchEndLife when the storage type changes
+        fetchEndLife(foodItem, storageType, startLife)
+            .then(endLife => {
+                updateEntryInDataset(foodItem, storageType, endLife);
+            });
+    
+        
+    
+        isDragging = false;
+        shape.style.zIndex = '2'; // Reset the shape's z-index after dragging
+    }
+}
+document.addEventListener('mouseup', endDragShape);
+document.addEventListener('touchend', endDragShape);
 
 
 
@@ -259,3 +280,4 @@ function updateEntryInDataset(foodItem, newStorageType, endLife) {
 }
 
 document.addEventListener('mousemove', checkFridgeState);
+document.addEventListener('touchmove', checkFridgeState);
