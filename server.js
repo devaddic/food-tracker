@@ -7,8 +7,6 @@ const app = express()
 app.use(express.static('public'));
 app.use(express.json());
 
-const A_KEY = 
-
 app.post('/fetchEndLife', async (req, res) => {
   const { foodItem, storageType, startLife } = req.body;
 

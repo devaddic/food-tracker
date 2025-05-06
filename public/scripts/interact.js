@@ -74,14 +74,15 @@ function getStorageType(shape) {
         return 'pantry';
     }
 }
-    function addEntryToDataset(foodItem, storageType, startLife, endLife) {
-    dataset.push({ food_item: foodItem, storage_type: storageType, start_life: startLife, end_life: endLife });
+
+function addEntryToDataset(foodItem, storageType, startLife, endLife) {
+    dataset.push({ food_ID: iconCount, food_item: foodItem, storage_type: storageType, start_life: startLife, end_life: endLife });
     displayDataset();
 }
 
 function saveDatasetToCSV() {
     let csvContent = 'food_item,storage_type,start_life,end_life\n';
-    csvContent += dataset.map(entry => `${entry.food_item},${entry.storage_type},${entry.start_life},${entry.end_life}`).join('\n');
+    csvContent += dataset.map(entry => `${entry.food_ID},${entry.food_item},${entry.storage_type},${entry.start_life},${entry.end_life}`).join('\n');
     localStorage.setItem('csvContent', csvContent);
 }
 
@@ -94,18 +95,33 @@ function displayDataset() {
 
         Object.values(entry).forEach(cellValue => {
             const cell = document.createElement("td");
-             
-            if(cellValue == entry.start_life) {
+            if(cellValue == entry.food_ID) {
+            }
+            else if(cellValue == entry.start_life) {
                 cell.textContent = new Date(entry.start_life * 1000).toString().substring(4,21);
+                row.appendChild(cell);
             }
             else {
                 cell.textContent = cellValue;
+                row.appendChild(cell);
             }
-            row.appendChild(cell);
         });
         
         tableBody.appendChild(row);
     });
+}
+
+function updateEntryInDataset(food_ID, newStorageType, endLife) {
+    dataset = dataset.map(entry => {
+        if (entry.food_ID == food_ID) {
+            console.log('updateEntryInDataset()');
+            entry.storage_type = newStorageType;
+            entry.end_life = endLife; // Update the end life
+        }
+        return entry;
+    });
+    saveDatasetToCSV();
+    displayDataset();
 }
 
 async function fetchIcon() {
@@ -119,6 +135,7 @@ async function fetchIcon() {
     const startLife = getCurrentUnixTime();
     const storageType = 'pantry';
     const foodItem = query;
+    const food_ID = iconCount;
     
     
 
@@ -144,8 +161,9 @@ async function fetchIcon() {
                 const iconElement = document.createElement('img');
                 iconElement.src = iconUrl;
                 iconElement.classList.add('shape');
-                iconElement.id = query; // Use the food item as the ID
+                iconElement.id = query + iconCount; // Use the food item as the ID
                 iconElement.dataset.foodItem = query; // Save food item to dataset attribute
+                iconElement.dataset.food_ID = food_ID;
                 
 
                 iconElement.style.right = `0%`;
@@ -177,85 +195,84 @@ async function inputEntered(event) {
     }
 }
 
-function makeDraggable(shape) {
-let isDragging = false;
-let initialX, initialY, offsetX, offsetY;
+function makeDraggable(shape) {                                                                 
+    let isDragging = false;
+    let initialX, initialY, offsetX, offsetY;
 
-document.addEventListener('mousedown', function() {
-
-const rect = shape.getBoundingClientRect();
-const containerRect = pistoContainer.getBoundingClientRect();
-
-if (rect.right < containerRect.left || rect.left > containerRect.right || rect.bottom < containerRect.top || rect.top > containerRect.bottom) {
-// Apply transformation to piston when icon is dragged outside
-piston.style.transition = 'transform 1s ease-in-out';
-piston.style.transformOrigin = 'center top';
-piston.style.transform = 'rotateX(0deg)';
-
-
-}
-});
-
-document.addEventListener('touchdown', function() {
+    document.addEventListener('mousedown', function() {
 
     const rect = shape.getBoundingClientRect();
     const containerRect = pistoContainer.getBoundingClientRect();
-    
+
     if (rect.right < containerRect.left || rect.left > containerRect.right || rect.bottom < containerRect.top || rect.top > containerRect.bottom) {
     // Apply transformation to piston when icon is dragged outside
     piston.style.transition = 'transform 1s ease-in-out';
     piston.style.transformOrigin = 'center top';
     piston.style.transform = 'rotateX(0deg)';
-    
-    
+
+
     }
     });
 
-function startDragShape(event) {
-    isDragging = true;
-    initialX = (event.clientX || event.touches[0].clientX);
-    initialY = (event.clientY || event.touches[0].clientY);
-    offsetX = shape.offsetLeft;
-    offsetY = shape.offsetTop;
-    shape.style.zIndex = '9999'; // Bring the shape to the top while dragging
-    event.preventDefault();
-}
-shape.addEventListener('mousedown', startDragShape);
-shape.addEventListener('touchstart', startDragShape);
+    document.addEventListener('touchdown', function() {
 
-function dragShape(event) {
-    if (isDragging) {
-        shape.style.left = (offsetX + (event.clientX || event.touches[0].clientX) - initialX) + 'px';
-        shape.style.top = (offsetY + (event.clientY || event.touches[0].clientY) - initialY) + 'px';
-        checkFridgeState(event);
-    }
-}
-document.addEventListener('mousemove', dragShape);
-document.addEventListener('touchmove', dragShape);
-
-function endDragShape(event) {
-    if (isDragging) {
-        const storageType = getStorageType(shape); // Pass the shape element
-        const foodItem = shape.dataset.foodItem;
-        const startLife = getStartLife(foodItem); // Fetch the start life value
+        const rect = shape.getBoundingClientRect();
+        const containerRect = pistoContainer.getBoundingClientRect();
         
-        // Call fetchEndLife when the storage type changes
-        fetchEndLife(foodItem, storageType, startLife)
-            .then(endLife => {
-                updateEntryInDataset(foodItem, storageType, endLife);
-            });
-    
+        if (rect.right < containerRect.left || rect.left > containerRect.right || rect.bottom < containerRect.top || rect.top > containerRect.bottom) {
+        // Apply transformation to piston when icon is dragged outside
+        piston.style.transition = 'transform 1s ease-in-out';
+        piston.style.transformOrigin = 'center top';
+        piston.style.transform = 'rotateX(0deg)';
         
-    
-        isDragging = false;
-        shape.style.zIndex = '2'; // Reset the shape's z-index after dragging
+        
+        }
+        });
+
+    function startDragShape(event) {
+        isDragging = true;
+        initialX = (event.clientX || event.touches[0].clientX);
+        initialY = (event.clientY || event.touches[0].clientY);
+        offsetX = shape.offsetLeft;
+        offsetY = shape.offsetTop;
+        shape.style.zIndex = '9999'; // Bring the shape to the top while dragging
+        event.preventDefault();
     }
-}
-document.addEventListener('mouseup', endDragShape);
-document.addEventListener('touchend', endDragShape);
+    shape.addEventListener('mousedown', startDragShape);
+    shape.addEventListener('touchstart', startDragShape);
 
+    function dragShape(event) {
+        if (isDragging) {
+            shape.style.left = (offsetX + (event.clientX || event.touches[0].clientX) - initialX) + 'px';
+            shape.style.top = (offsetY + (event.clientY || event.touches[0].clientY) - initialY) + 'px';
+            checkFridgeState(event);
+        }
+    }
+    document.addEventListener('mousemove', dragShape);
+    document.addEventListener('touchmove', dragShape);
 
-
+    function endDragShape(event) {
+        if (isDragging) {
+            const storageType = getStorageType(shape); // Pass the shape element
+            const foodItem = shape.dataset.foodItem;
+            const food_ID = shape.dataset.food_ID;
+            const startLife = getStartLife(foodItem); // Fetch the start life value
+            
+            // Call fetchEndLife when the storage type changes
+            fetchEndLife(foodItem, storageType, startLife)
+                .then(endLife => {
+                    console.log("food_ID: " + food_ID);
+                    updateEntryInDataset(food_ID, storageType, endLife);
+                });
+        
+            
+        
+            isDragging = false;
+            shape.style.zIndex = '2'; // Reset the shape's z-index after dragging
+        }
+    }
+    document.addEventListener('mouseup', endDragShape);
+    document.addEventListener('touchend', endDragShape);
 }
 
 function getStartLife(foodItem) {
@@ -267,17 +284,6 @@ function getStartLife(foodItem) {
     }
 }
 
-function updateEntryInDataset(foodItem, newStorageType, endLife) {
-    dataset = dataset.map(entry => {
-        if (entry.food_item === foodItem) {
-            entry.storage_type = newStorageType;
-            entry.end_life = endLife; // Update the end life
-        }
-        return entry;
-    });
-    saveDatasetToCSV();
-    displayDataset();
-}
 
 document.addEventListener('mousemove', checkFridgeState);
 document.addEventListener('touchmove', checkFridgeState);
