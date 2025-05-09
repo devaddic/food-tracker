@@ -141,7 +141,7 @@ async function fetchIcon() {
 
     // Call fetchEndLife when the shape is created
     const endLife = await fetchEndLife(foodItem, storageType, startLife);
-    console.log('endLife: ' + endLife);
+ 
 
     if((endLife == "invalid") || (endLife == "Invalid.")) {
         alert(foodItem + " is an invalid food item!");
@@ -156,33 +156,30 @@ async function fetchIcon() {
             const data = await response.json();
             const iconUrl = data.icon_url;
 
-            if (iconUrl !== "No icon found.") {
-                const iconContainer = document.getElementById('iconContainer');
-                const iconElement = document.createElement('img');
-                iconElement.src = iconUrl;
-                iconElement.classList.add('shape');
-                iconElement.id = query + iconCount; // Use the food item as the ID
-                iconElement.dataset.foodItem = query; // Save food item to dataset attribute
-                iconElement.dataset.food_ID = food_ID;
-                
+            const iconContainer = document.getElementById('iconContainer');
+            const iconElement = document.createElement('img');
+            iconElement.src = iconUrl;
+            iconElement.classList.add('shape');
+            iconElement.id = query + iconCount; // Use the food item as the ID
+            iconElement.dataset.foodItem = query; // Save food item to dataset attribute
+            iconElement.dataset.food_ID = food_ID;
+            iconElement.alt = foodItem;
 
-                iconElement.style.right = `0%`;
-                iconElement.style.bottom = `0%`;
-                iconContainer.appendChild(iconElement);
+            iconElement.style.right = `0%`;
+            iconElement.style.bottom = `0%`;
+            iconContainer.appendChild(iconElement);
 
-                addEntryToDataset(foodItem, storageType, startLife, endLife);
+            addEntryToDataset(foodItem, storageType, startLife, endLife);
 
-                // Trigger piston transformation on X-axis (automatic animation)
-                const piston = document.getElementById('piston');
-                piston.style.transformOrigin ='top center';
-                piston.style.transform = 'rotateX(180deg)';  // Apply X-axis scaling transformation
-                piston.style.transition = 'transform 1s ease-in-out'; // Smooth transition for animation
+            // Trigger piston transformation on X-axis (automatic animation)
+            const piston = document.getElementById('piston');
+            piston.style.transformOrigin ='top center';
+            piston.style.transform = 'rotateX(180deg)';  // Apply X-axis scaling transformation
+            piston.style.transition = 'transform 1s ease-in-out'; // Smooth transition for animation
 
-                makeDraggable(iconElement);
-                iconCount++;
-            } else {
-                alert('No icon found.');
-            }
+            makeDraggable(iconElement);
+            iconCount++;
+            
         } catch (error) {
             console.error('Error:', error);
         }
