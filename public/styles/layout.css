@@ -190,7 +190,7 @@ body {
         bottom: 1%;
     }
 
-    table {
+    #datasetDisplay > table {
         font-size: 0.75em;
     }
 }
@@ -360,10 +360,18 @@ body {
     }
 }
 
-table {
+#datasetDisplay {
     position: absolute;
     top: 5%;
     border-collapse: collapse;
+    max-height: 300px;
+    width: 50%;
+    overflow-y: auto;
+
+    table {
+        width: 100%;
+    }
+    
 }
 
 th, td {
