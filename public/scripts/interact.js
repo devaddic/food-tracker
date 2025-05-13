@@ -3,9 +3,8 @@ const fridge2Container = document.querySelector('.fridge2-container');
 const fridge3Container = document.querySelector('.fridge3-container');
 const pistoContainer = document.querySelector('.pisto-container');
 
-let dataset = []; // Initialize dataset as an array
+let dataset = []; 
 
-//request server for EndLife
 async function fetchEndLife(foodItem, storageType, startLife) {
 
     const response = await fetch('/fetchEndLife', {
@@ -20,16 +19,23 @@ async function fetchEndLife(foodItem, storageType, startLife) {
         })
       });
     const data = await response.json();
-    console.log(data.endLife);
     return data.endLife;
 
 }
 
 function checkFridgeState(event) {
     const rect2 = fridge2Container.getBoundingClientRect();
-    const isCursorInside2 = (event.clientX || event.touches[0].clientX) >= rect2.left && (event.clientX || event.touches[0].clientX) <= rect2.right && (event.clientY || event.touches[0].clientY) >= rect2.top && (event.clientY || event.touches[0].clientY) <= rect2.bottom;
+    const isCursorInside2 = 
+        (event.clientX || event.touches[0].clientX) >= rect2.left && 
+        (event.clientX || event.touches[0].clientX) <= rect2.right && 
+        (event.clientY || event.touches[0].clientY) >= rect2.top && 
+        (event.clientY || event.touches[0].clientY) <= rect2.bottom;
     const rect3 = fridge3Container.getBoundingClientRect();
-    const isCursorInside3 = (event.clientX || event.touches[0].clientX) >= rect3.left &&(event.clientX || event.touches[0].clientX) <= rect3.right && (event.clientY || event.touches[0].clientY) >= rect3.top && (event.clientY || event.touches[0].clientY) <= rect3.bottom;
+    const isCursorInside3 = 
+        (event.clientX || event.touches[0].clientX) >= rect3.left &&
+        (event.clientX || event.touches[0].clientX) <= rect3.right && 
+        (event.clientY || event.touches[0].clientY) >= rect3.top && 
+        (event.clientY || event.touches[0].clientY) <= rect3.bottom;
 
     if (isCursorInside2) {
         fridge2.style.transform = 'rotateY(-120deg)';
@@ -47,7 +53,7 @@ function getCurrentUnixTime() {
     return Math.floor(Date.now() / 1000);
 }
 
-function getStorageType(shape) {
+function getStorageType(shape) { 
     const rect2 = fridge2Container.getBoundingClientRect();
     const rect3 = fridge3Container.getBoundingClientRect();
     const shapeRect = shape.getBoundingClientRect();
@@ -76,15 +82,16 @@ function getStorageType(shape) {
 }
 
 function addEntryToDataset(foodItem, storageType, startLife, endLife) {
-    dataset.push({ food_ID: iconCount, food_item: foodItem, storage_type: storageType, start_life: startLife, end_life: endLife });
+    dataset.push({ food_ID: iconCount, food_item: foodItem, storage_type: storageType, 
+        start_life: startLife, end_life: endLife });
     displayDataset();
 }
 
-function saveDatasetToCSV() {
-    let csvContent = 'food_item,storage_type,start_life,end_life\n';
-    csvContent += dataset.map(entry => `${entry.food_ID},${entry.food_item},${entry.storage_type},${entry.start_life},${entry.end_life}`).join('\n');
-    localStorage.setItem('csvContent', csvContent);
-}
+// function saveDatasetToCSV() {
+//     let csvContent = 'food_item,storage_type,start_life,end_life\n';
+//     csvContent += dataset.map(entry => `${entry.food_ID},${entry.food_item},${entry.storage_type},${entry.start_life},${entry.end_life}`).join('\n');
+//     sessionStorage.setItem('csvContent', csvContent);
+// }
 
 function displayDataset() {
     const tableBody = document.querySelector("#datasetDisplay tbody");
@@ -114,9 +121,8 @@ function displayDataset() {
 function updateEntryInDataset(food_ID, newStorageType, endLife) {
     dataset = dataset.map(entry => {
         if (entry.food_ID == food_ID) {
-            console.log('updateEntryInDataset()');
             entry.storage_type = newStorageType;
-            entry.end_life = endLife; // Update the end life
+            entry.end_life = endLife; 
         }
         return entry;
     });
@@ -137,17 +143,10 @@ async function fetchIcon() {
     const foodItem = query;
     const food_ID = iconCount;
     
-    
-
-    // Call fetchEndLife when the shape is created
     const endLife = await fetchEndLife(foodItem, storageType, startLife);
- 
-
     if((endLife == "invalid") || (endLife == "Invalid.")) {
         alert(foodItem + " is an invalid food item!");
-
     }
-
     else { 
         const proxyUrl = `/search?query=${query}`;
 
@@ -160,8 +159,8 @@ async function fetchIcon() {
             const iconElement = document.createElement('img');
             iconElement.src = iconUrl;
             iconElement.classList.add('shape');
-            iconElement.id = query + iconCount; // Use the food item as the ID
-            iconElement.dataset.foodItem = query; // Save food item to dataset attribute
+            iconElement.id = query + iconCount; 
+            iconElement.dataset.foodItem = query; 
             iconElement.dataset.food_ID = food_ID;
             iconElement.alt = foodItem;
 
@@ -171,11 +170,10 @@ async function fetchIcon() {
 
             addEntryToDataset(foodItem, storageType, startLife, endLife);
 
-            // Trigger piston transformation on X-axis (automatic animation)
             const piston = document.getElementById('piston');
             piston.style.transformOrigin ='top center';
-            piston.style.transform = 'rotateX(180deg)';  // Apply X-axis scaling transformation
-            piston.style.transition = 'transform 1s ease-in-out'; // Smooth transition for animation
+            piston.style.transform = 'rotateX(180deg)';  
+            piston.style.transition = 'transform 1s ease-in-out'; 
 
             makeDraggable(iconElement);
             iconCount++;
@@ -196,35 +194,18 @@ function makeDraggable(shape) {
     let isDragging = false;
     let initialX, initialY, offsetX, offsetY;
 
-    document.addEventListener('mousedown', function() {
-
-    const rect = shape.getBoundingClientRect();
-    const containerRect = pistoContainer.getBoundingClientRect();
-
-    if (rect.right < containerRect.left || rect.left > containerRect.right || rect.bottom < containerRect.top || rect.top > containerRect.bottom) {
-    // Apply transformation to piston when icon is dragged outside
-    piston.style.transition = 'transform 1s ease-in-out';
-    piston.style.transformOrigin = 'center top';
-    piston.style.transform = 'rotateX(0deg)';
-
-
-    }
-    });
-
-    document.addEventListener('touchdown', function() {
-
+    function transformPiston(event) {
         const rect = shape.getBoundingClientRect();
         const containerRect = pistoContainer.getBoundingClientRect();
-        
+
         if (rect.right < containerRect.left || rect.left > containerRect.right || rect.bottom < containerRect.top || rect.top > containerRect.bottom) {
-        // Apply transformation to piston when icon is dragged outside
-        piston.style.transition = 'transform 1s ease-in-out';
-        piston.style.transformOrigin = 'center top';
-        piston.style.transform = 'rotateX(0deg)';
-        
-        
+            piston.style.transition = 'transform 1s ease-in-out';
+            piston.style.transformOrigin = 'center top';
+            piston.style.transform = 'rotateX(0deg)';
         }
-        });
+    }
+    document.addEventListener('mousedown', transformPiston);
+    document.addEventListener('touchdown', transformPiston);
 
     function startDragShape(event) {
         isDragging = true;
@@ -232,7 +213,7 @@ function makeDraggable(shape) {
         initialY = (event.clientY || event.touches[0].clientY);
         offsetX = shape.offsetLeft;
         offsetY = shape.offsetTop;
-        shape.style.zIndex = '9999'; // Bring the shape to the top while dragging
+        shape.style.zIndex = '9999'; //arbitary value chosen
         event.preventDefault();
     }
     shape.addEventListener('mousedown', startDragShape);
@@ -250,22 +231,18 @@ function makeDraggable(shape) {
 
     function endDragShape(event) {
         if (isDragging) {
-            const storageType = getStorageType(shape); // Pass the shape element
+            const storageType = getStorageType(shape); 
             const foodItem = shape.dataset.foodItem;
             const food_ID = shape.dataset.food_ID;
-            const startLife = getStartLife(foodItem); // Fetch the start life value
+            const startLife = getStartLife(foodItem); 
             
-            // Call fetchEndLife when the storage type changes
             fetchEndLife(foodItem, storageType, startLife)
                 .then(endLife => {
-                    console.log("food_ID: " + food_ID);
                     updateEntryInDataset(food_ID, storageType, endLife);
                 });
         
-            
-        
             isDragging = false;
-            shape.style.zIndex = '2'; // Reset the shape's z-index after dragging
+            shape.style.zIndex = '2'; 
         }
     }
     document.addEventListener('mouseup', endDragShape);
@@ -277,10 +254,9 @@ function getStartLife(foodItem) {
     if (entry) {
         return entry.start_life;
     } else {
-        return null; // Return null or a default value if the entry is not found
+        return null;
     }
 }
-
 
 document.addEventListener('mousemove', checkFridgeState);
 document.addEventListener('touchmove', checkFridgeState);
