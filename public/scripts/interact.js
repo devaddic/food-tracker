@@ -126,7 +126,6 @@ function updateEntryInDataset(food_ID, newStorageType, endLife) {
         }
         return entry;
     });
-    saveDatasetToCSV();
     displayDataset();
 }
 
